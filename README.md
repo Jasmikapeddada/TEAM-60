@@ -25,29 +25,6 @@ The system is built using **LLMs + Retrieval Augmented Generation (RAG) + Guardr
 
 ![Architecture Diagram]("C:\Users\Neelam Sirisha\OneDrive\Pictures\Screenshots\Screenshot 2025-12-13 151746.png")
 
-Faculty UI (Streamlit)
-│
-▼
-Orchestrator Agent (Workflow Controller)
-│
-├── RAG Layer (FAISS Vector DB)
-├── Guardrails & Validators
-│
-▼
-Multi-Agent System
-├─ Syllabus Understanding Agent
-├─ Lesson Planner Agent
-├─ Assessment Generator Agent
-├─ Evaluation Agent
-└─ Compliance Agent
-│
-▼
-Evaluation Engine & Results
-│
-▼
-Streamlit Results Dashboard
-
-`
 
 ---
 
