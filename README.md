@@ -153,17 +153,6 @@ Streamlit Results Dashboard
 
 ---
 
-## 🚀 How to Run
-
-bash
-git clone https://github.com/your-username/ai-teaching-assistant
-cd ai-teaching-assistant
-pip install -r requirements.txt
-streamlit run app.py
-`
-
----
-
 ## 🎯 Key Highlights
 
 * Not a chatbot — a **rule-enforced academic AI system**
