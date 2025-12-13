@@ -27,7 +27,7 @@ class RAGRetriever:
 
 if __name__ == "__main__":
     retriever = RAGRetriever()
-    query = "Knowledge representation and reasoning"
+    query = "Artificial Intelligence & Machine Learning"
     results = retriever.retrieve(query)
 
     print("\nRetrieved Context:\n")
