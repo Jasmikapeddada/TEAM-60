@@ -1,0 +1,24 @@
+# Core Python utilities
+numpy
+pickle-mixin
+
+# PDF processing
+PyPDF2
+
+# Embeddings & semantic search
+sentence-transformers
+faiss-cpu
+
+# LLM orchestration
+langchain
+langchain-openai
+openai
+
+# UI
+streamlit
+
+# Environment & config
+python-dotenv
+
+# Optional but recommended (logging, parsing)
+pydantic
