@@ -1,0 +1,28 @@
+{
+  "exam_name": "End Semester Examination",
+  "total_marks": 70,
+  "duration_minutes": 180,
+
+  "sections": [
+    {
+      "section_name": "Part-A",
+      "question_type": "short",
+      "num_questions": 10,
+      "marks_per_question": 2,
+      "bloom_levels_allowed": ["Remember", "Understand"]
+    },
+    {
+      "section_name": "Part-B",
+      "question_type": "long",
+      "num_questions": 5,
+      "marks_per_question": 10,
+      "bloom_levels_allowed": ["Apply", "Analyze", "Evaluate"]
+    }
+  ],
+
+  "constraints": {
+    "no_repeated_questions": true,
+    "must_cover_all_units": true,
+    "max_questions_per_unit": 3
+  }
+}
