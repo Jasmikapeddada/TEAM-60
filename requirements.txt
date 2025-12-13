@@ -16,9 +16,11 @@ openai
 
 # UI
 streamlit
+pandas
 
 # Environment & config
 python-dotenv
 
 # Optional but recommended (logging, parsing)
 pydantic
+

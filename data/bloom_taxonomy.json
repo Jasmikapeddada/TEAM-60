@@ -19,7 +19,7 @@
     "description": "Using information in new situations",
     "verbs": ["apply", "solve", "demonstrate", "use", "implement"],
     "example_questions": [
-      "Apply Dijkstra’s algorithm to find shortest path",
+      "Apply Dijkstra's algorithm to find shortest path",
       "Solve the given SQL query"
     ]
   },
@@ -48,3 +48,4 @@
     ]
   }
 }
+
