@@ -23,6 +23,7 @@ The system is built using **LLMs + Retrieval Augmented Generation (RAG) + Guardr
 ## 🏗️ System Architecture
 
 
+![Architecture Diagram]("C:\Users\Neelam Sirisha\OneDrive\Pictures\Screenshots\Screenshot 2025-12-13 151746.png")
 
 Faculty UI (Streamlit)
 │
