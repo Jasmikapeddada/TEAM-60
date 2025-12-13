@@ -1,28 +1,3 @@
-[13:04, 13/12/2025] Tejasathvika: # 🧠 COMPLETE SYSTEM PIPELINE
-
-## AI Teaching Assistant for Faculty
-
-(Auto-Planning + Auto-Assessment using LLM + RAG + Agentic RAG)
-
----
-
-## 🧩 0️⃣ High-Level Goal (One-Line)
-
-> Build an *agentic, syllabus-aware AI co-pilot* that automates lesson planning and assessment creation *while strictly adhering to Bloom’s taxonomy, syllabus coverage, and university exam rules*.
-
----
-
-## 1️⃣ SYSTEM OVERVIEW (BIG PICTURE)
-
-
-Faculty → U…
-[13:19, 13/12/2025] Sirisha 🐷 Chinna Kuthuru: Got it 👍
-Below is a *clean, final, copy-paste ready README.md* for your GitHub repository.
-No extra explanation — this is exactly what you upload.
-
----
-
-md
 # 🎓 AI Teaching Assistant for Faculty  
 ### Agentic RAG-based Auto Planning & Auto Assessment System
 
