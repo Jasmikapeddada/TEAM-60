@@ -24,3 +24,4 @@ python-dotenv
 # Optional but recommended (logging, parsing)
 pydantic
 
+streamlit
