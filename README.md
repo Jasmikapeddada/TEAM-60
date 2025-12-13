@@ -23,7 +23,7 @@ The system is built using **LLMs + Retrieval Augmented Generation (RAG) + Guardr
 ## 🏗️ System Architecture
 
 
-![Architecture Diagram]("TEAM-60\Screenshot 2025-12-13 151746.png")
+![Architecture Diagram]("[TEAM-60\Screenshot 2025-12-13 151746.png](https://github.com/Jasmikapeddada/TEAM-60/blob/main/ChatGPT%20Image%20Dec%2013%2C%202025%2C%2004_40_33%20PM.png)")
 
 
 ---
