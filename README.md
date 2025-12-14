@@ -6,49 +6,48 @@
 
 ## 📌 Problem Context (Why This Solution?)
 
-In real academic environments, faculty members are responsible for multiple **manual, repetitive, and regulation-heavy tasks**, such as:
+In real academic environments, faculty members spend a significant amount of time on **manual, repetitive, and regulation-heavy tasks**, such as:
 
-* Analyzing large syllabus PDFs
+* Analyzing large syllabus PDFs (40–60 pages)
 * Planning weekly lesson schedules
-* Designing question papers aligned with Bloom’s Taxonomy
-* Evaluating student answers using rubrics
+* Designing question papers aligned with **Bloom’s Taxonomy**
+* Evaluating student answers using structured rubrics
 
-Existing AI tools behave like **generic chatbots**:
+### Why Existing AI Tools Fail
 
-* ❌ They hallucinate content
-* ❌ They ignore syllabus boundaries
-* ❌ They do not follow Bloom’s taxonomy or exam rules
-* ❌ They provide no academic compliance guarantees
+Generic AI chatbots:
 
-👉 **Hence, a chatbot-style AI is unsafe for academic workflows.**
+* ❌ Hallucinate topics outside syllabus
+* ❌ Ignore Bloom’s taxonomy
+* ❌ Do not follow exam patterns
+* ❌ Provide no academic compliance guarantees
 
----
-
-## 💡 Proposed Solution (What We Built)
-
-We built an **Agentic AI Teaching Assistant** that behaves like a **digital academic assistant**, not a chatbot.
-
-The system:
-
-* Works strictly within **syllabus boundaries**
-* Enforces **Bloom’s Taxonomy**
-* Follows **exam patterns & rubrics**
-* Uses **multi-agent reasoning + guardrails** to ensure correctness
-
-This makes the solution **safe, explainable, and suitable for universities**.
+👉 **Academic workflows require controlled, verifiable, and syllabus-grounded intelligence — not a chatbot.**
 
 ---
 
-## 🧠 How the Solution Works (End-to-End Flow)
+## 💡 Proposed Solution
 
-The solution follows a **controlled, step-by-step academic pipeline** instead of a single AI prompt.
+We built an **Agentic AI Teaching Assistant** that behaves like a **digital academic assistant**, not a conversational bot.
+
+### What Makes It Different
+
+* ✅ Strictly syllabus-grounded using **RAG (Retrieval-Augmented Generation)**
+* ✅ Enforces **Bloom’s Taxonomy** and exam rules
+* ✅ Uses **multiple specialized agents** for reliability
+* ✅ Validates output through a **Compliance Agent**
+* ✅ Fully explainable and auditable
+
+---
+
+## 🧠 High-Level System Workflow
 
 ```
 Faculty Input
    ↓
 Intent Understanding Agent
    ↓
-Orchestrator (Decision Maker)
+Orchestrator (Controller)
    ↓
 RAG (Syllabus Retrieval)
    ↓
@@ -59,46 +58,74 @@ Compliance & Validation Agent
 Final Output to Faculty
 ```
 
-Each step is **independently verified**, making the system reliable.
+Each step is independently verified, ensuring **trustworthy academic output**.
 
 ---
 
-## 🏗️ System Architecture Overview
+## 🏗️ System Architecture
 
-The architecture is designed around **agent separation of concerns**.
-
-### Core Principles
+### Core Design Principles
 
 * One agent = one academic responsibility
-* Agents do not directly talk to each other
+* Agents do NOT talk directly to each other
 * Orchestrator controls execution flow
-* All outputs are validated before display
+* RAG is the **single source of truth**
 
-![Architecture Diagram](https://github.com/Jasmikapeddada/TEAM-60/blob/main/ChatGPT%20Image%20Dec%2013%2C%202025%2C%2004_40_33%20PM.png)
+### Architecture Overview
+
+```
+UI (Streamlit)
+   ↓
+Orchestrator Agent
+   ↓
+┌──────────────┬──────────────┬──────────────┐
+│ Intent Agent │ Syllabus RAG │ Content Agents│
+└──────────────┴──────────────┴──────────────┘
+   ↓
+Compliance Agent
+   ↓
+Final Output + Metrics
+```
 
 ---
 
-## 🧠 Updated Agent Design (Modified from Initial Version)
+## 📚 RAG Pipeline (Why Outputs Are Trustworthy)
 
-To improve **clarity, academic safety, and jury explainability**, we refined the originally used agents into a **cleaner, responsibility-driven design**. Each agent now has:
+### Step 1: Document Ingestion
 
-* A **single academic responsibility**
-* **Structured JSON input/output**
-* No direct inter-agent coupling
+* Input: Syllabus PDF / TXT
+* Text extraction
+* Chunking (500–700 tokens with overlap)
+* Metadata tagging (unit, topic)
+
+### Step 2: Vector Storage
+
+* Embeddings: `SentenceTransformers (all-MiniLM-L6-v2)`
+* Vector DB: **FAISS**
+
+### Step 3: Context Retrieval
+
+* Query-based semantic search
+* Retrieves only **relevant syllabus chunks**
+
+### Step 4: Grounded Generation
+
+* LLM generates content using **retrieved context only**
+* No retrieved context → No generation
+
+👉 This eliminates hallucinations completely.
 
 ---
 
-### 1️⃣ Intent Understanding Agent (NEW – Added)
+## 🤖 Multi-Agent Architecture
 
-**Why modified?**
-Earlier, user input was passed directly to generation agents, which caused ambiguity.
+### 1️⃣ Intent Understanding Agent
 
-**Updated Role:**
+**Purpose:**
 
 * Converts faculty natural language into structured intent
-* Decides *what* needs to be generated (lesson plan, questions, evaluation)
 
-**Example Output:**
+**Output Example:**
 
 ```json
 {
@@ -109,199 +136,150 @@ Earlier, user input was passed directly to generation agents, which caused ambig
 }
 ```
 
-👉 This agent enables **dynamic orchestration**.
+---
+
+### 2️⃣ Orchestrator Agent
+
+**Purpose:**
+
+* Central controller
+* Decides which agents to invoke
+* Maintains execution order and logs
+
+❌ No content generation
 
 ---
 
-### 2️⃣ Orchestrator Agent (ENHANCED)
+### 3️⃣ Syllabus Understanding Agent
 
-**Earlier:** Static execution flow
+**Purpose:**
 
-**Now:**
+* Converts syllabus text into structured JSON
 
-* Dynamically decides which agents to invoke
-* Controls async execution
-* Maintains execution timeline
+**Extracts:**
 
-**Responsibility:**
+* Units
+* Topics
+* Learning Outcomes
 
-* No content generation
-* Only routing, coordination, and logging
-
----
-
-### 3️⃣ Syllabus Understanding Agent (REFINED)
-
-**Earlier:** Raw text extraction
-
-**Now:**
-
-* Converts syllabus PDF into structured JSON
-* Extracts:
-
-  * Units
-  * Topics
-  * Learning outcomes
-
-**Why modified?**
-This structured syllabus becomes the **single source of truth** for all agents.
+Acts as the **academic source of truth**.
 
 ---
 
-### 4️⃣ Lesson Planner Agent (SPLIT FROM CONTENT AGENT)
+### 4️⃣ Lesson Planner Agent
 
-**Earlier:** Lesson planning + generation combined
+**Purpose:**
 
-**Now (Separated):**
-
-* Allocates topics week-wise
-* Ensures syllabus coverage balance
+* Allocates syllabus topics week-wise
+* Balances workload
 * Prevents topic overload
 
-👉 Separation improves explainability and debugging.
-
 ---
 
-### 5️⃣ Assessment Generator Agent (REFINED)
+### 5️⃣ Assessment Generator Agent
 
-**Earlier:** Generic question generation
+**Purpose:**
 
-**Now:**
-
-* Generates questions per Bloom level
-* Enforces exam pattern rules
-* Uses Bloom verbs from constants
+* Generates questions based on Bloom’s Taxonomy
+* Enforces exam patterns
 
 **Guarantees:**
 
 * No repetition
 * Balanced difficulty
-* Bloom compliance
+* Syllabus-only questions
 
 ---
 
-### 6️⃣ Evaluation Agent (ENHANCED)
+### 6️⃣ Evaluation Agent
 
-**Earlier:** Simple scoring
+**Purpose:**
 
-**Now:**
+* Rubric-based student answer evaluation
 
-* Rubric-based scoring
-* Criterion-wise feedback
-* Missing concept detection
-
-**Output Includes:**
+**Outputs:**
 
 * Marks
 * Strengths
 * Weak areas
-* Suggestions
+* Improvement suggestions
 
 ---
 
-### 7️⃣ Compliance Agent (NEW – Non-Generative)
+### 7️⃣ Compliance Agent (Critical Safety Layer)
 
-**Why added?**
-To ensure academic safety before final output.
+**Purpose:**
+
+* Validates all generated content
 
 **Checks:**
 
-* Out-of-syllabus content
-* Bloom imbalance
+* Syllabus boundaries
+* Bloom distribution
 * Exam rule violations
 
 **Behavior:**
 
-* PASS → Output displayed
+* PASS → Output shown
 * FAIL → Regeneration triggered
 
-👉 This agent provides **institution-level trust**.
+👉 Enables **institution-level trust**.
 
 ---
 
-## 📚 RAG Pipeline (Why Answers Are Trustworthy)
+## 🔄 Agent Communication Pattern
 
-### Step 1: Document Ingestion
+* Agents never talk directly
+* Orchestrator mediates all data flow
 
-* Syllabus PDF → text extraction
-* Chunked into 500–700 tokens
-* Embedded using SentenceTransformers
-
-### Step 2: Vector Storage
-
-* Stored in FAISS Vector DB
-
-### Step 3: Context Retrieval
-
-* Retrieves only relevant syllabus chunks
-* Filters by unit and topic
-
-### Step 4: Grounded Generation
-
-* LLM generates output using retrieved context only
-
-👉 **No retrieved context = no generation**
+```
+User Input
+   ↓
+Intent Agent
+   ↓
+Orchestrator
+   ↓
+Syllabus Agent (RAG)
+   ↓
+Content Agent (RAG)
+   ↓
+Compliance Agent
+   ↓
+Final Output
+```
 
 ---
 
-## 🛡️ Academic Guardrails
+## 📊 Quality Metrics
 
-### Hard Guardrails (Non-negotiable)
-
-* Syllabus-only generation
-* Bloom taxonomy enforcement
-* Exam pattern adherence
-
-### Soft Guardrails (Quality Enhancements)
-
-* Difficulty balancing
-* Concept diversity
-* Verb variation
+| Metric             | Description            |
+| ------------------ | ---------------------- |
+| Bloom Alignment    | Bloom verb correctness |
+| Coverage Score     | % of syllabus covered  |
+| Difficulty Balance | Even distribution      |
+| Explainability     | Feedback clarity       |
 
 ---
 
-## 📊 Evaluation Metrics (How Quality Is Measured)
+## 🖥️ Streamlit Application Flow
 
-| Metric                | Description                                       |
-| --------------------- | ------------------------------------------------- |
-| Bloom Alignment Score | Match between expected and generated Bloom levels |
-| Coverage Completeness | % of syllabus topics covered                      |
-| Difficulty Balance    | Variance across question difficulty               |
-| Explainability Score  | Quality of evaluation feedback                    |
-
----
-
-## 🖥️ Streamlit UI Walkthrough
-
-### 1️⃣ Upload Page
-
-* Upload syllabus PDF
-* Select subject & output type
-
-### 2️⃣ Processing Page
-
-* Live agent execution status
-* Intermediate outputs shown
-
-### 3️⃣ Results Page
-
-* Lesson plan table
-* Question paper
-* Bloom taxonomy distribution
-* Answer evaluation feedback
+1. Upload syllabus
+2. Select output type
+3. Live agent execution
+4. View validated results
+5. Download outputs
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer      | Technology           |
-| ---------- | -------------------- |
-| UI         | Streamlit            |
-| Agents     | LangChain / CrewAI   |
-| LLM        | Groq / OpenAI        |
-| Embeddings | SentenceTransformers |
-| Vector DB  | FAISS                |
-| Backend    | Python               |
+| Layer      | Technology               |
+| ---------- | ------------------------ |
+| UI         | Streamlit                |
+| Agents     | Python (Agentic Pattern) |
+| LLM        | Groq / OpenAI            |
+| Embeddings | SentenceTransformers     |
+| Vector DB  | FAISS                    |
 
 ---
 
@@ -315,7 +293,7 @@ To ensure academic safety before final output.
 
 ---
 
-## 🎤 Jury-Friendly One-Line Pitch
+## 🎤 One-Line Pitch (For Jury)
 
 > "An agentic, syllabus-grounded AI Teaching Assistant that automates academic planning and assessment while enforcing Bloom’s taxonomy, exam rules, and compliance — something a normal chatbot cannot do."
 
@@ -327,3 +305,7 @@ To ensure academic safety before final output.
 * Multilingual syllabus support
 * Department-level analytics
 * Adaptive learning recommendations
+
+---
+
+✅ **This system transforms academic workflows from manual, error-prone processes into a safe, intelligent, and scalable AI-driven pipeline.**
