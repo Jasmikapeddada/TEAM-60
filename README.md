@@ -45,9 +45,9 @@ We built an **Agentic AI Teaching Assistant** that behaves like a **digital acad
 ```
 Faculty Input
    ↓
-Intent Understanding Agent
-   ↓
 Orchestrator (Controller)
+   ↓
+Intent Understanding Agent
    ↓
 RAG (Syllabus Retrieval)
    ↓
